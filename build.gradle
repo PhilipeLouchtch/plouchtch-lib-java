@@ -1,6 +1,8 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+}
 
-group 'net.coolicer'
+group 'PhilipeLouchtch'
 version '0.1.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -30,4 +32,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
     testCompile group: 'org.springframework', name: 'spring-test', version: '2.5'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4'
+    distributionType = Wrapper.DistributionType.ALL
 }

@@ -52,4 +52,34 @@ public class AssertTest
 			throw ex;
 		}
 	}
+
+	private static class MyCustomException extends Exception
+	{
+		public MyCustomException(String message)
+		{
+			super(message);
+		}
+	}
+
+	@Test
+	public void givenTrueCondition_whenOrThrowWithCustomException_shouldWorkIfArgumentCorrect()
+	{
+		final String this_is_the_argument = "This is the argument";
+		Exception caughtEx = null;
+		try
+		{
+
+			Assert.that(false).orThrow(MyCustomException.class, this_is_the_argument);
+		}
+		catch (MyCustomException ex)
+		{
+			org.junit.Assert.assertEquals(this_is_the_argument, ex.getMessage());
+			caughtEx = ex;
+		}
+
+		if (caughtEx == null)
+		{
+			org.junit.Assert.fail("No exception was thrown");
+		}
+	}
 }
