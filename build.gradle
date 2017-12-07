@@ -22,6 +22,10 @@ sourceSets {
     }
 }
 
+jar {
+    from sourceSets.main.allSource
+}
+
 repositories {
     mavenCentral()
 }
