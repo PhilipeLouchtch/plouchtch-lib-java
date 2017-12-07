@@ -61,11 +61,10 @@ public class AssertTest
 		}
 	}
 
-	@Test
-	public void givenTrueCondition_whenOrThrowWithCustomException_shouldWorkIfArgumentCorrect()
+	@Test(expected = MyCustomException.class)
+	public void givenTrueCondition_whenOrThrowWithCustomException_shouldWorkIfArgumentCorrect() throws MyCustomException
 	{
 		final String this_is_the_argument = "This is the argument";
-		Exception caughtEx = null;
 		try
 		{
 
@@ -74,12 +73,19 @@ public class AssertTest
 		catch (MyCustomException ex)
 		{
 			org.junit.Assert.assertEquals(this_is_the_argument, ex.getMessage());
-			caughtEx = ex;
+			throw ex;
 		}
+	}
 
-		if (caughtEx == null)
-		{
-			org.junit.Assert.fail("No exception was thrown");
-		}
+	@Test(expected = MyCustomException.class)
+	public void givenEmptyString_whenAssertIsNonEmpty_shouldThrow() throws MyCustomException
+	{
+		Assert.isNonEmptyString("").orThrow(MyCustomException.class, "bla");
+	}
+
+	@Test(expected = MyCustomException.class)
+	public void givenNullString_whenAssertIsNonEmpty_shouldThrow() throws MyCustomException
+	{
+		Assert.isNonEmptyString(null).orThrow(MyCustomException.class, "bla");
 	}
 }

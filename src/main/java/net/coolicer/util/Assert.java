@@ -23,7 +23,7 @@ public class Assert
 
 	public static Assert isNonEmptyString(String string)
 	{
-		return new Assert(string != null && string.length() > 0);
+		return new Assert(string == null || string.isEmpty());
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class Assert
 	}
 
 	private boolean assertFailed;
-	private Assert(boolean assertFailed)
+	private Assert(boolean failWhen)
 	{
-		this.assertFailed = assertFailed;
+		this.assertFailed = failWhen;
 	}
 }
