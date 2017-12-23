@@ -1,4 +1,4 @@
-package net.coolicer.util;
+package net.coolicer.assertion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Supplier;

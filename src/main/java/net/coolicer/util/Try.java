@@ -1,7 +1,12 @@
 package net.coolicer.util;
 
+import net.coolicer.functional.ThrowingAction;
+import net.coolicer.functional.ThrowingConsumer;
 import net.coolicer.functional.ThrowingSupplier;
 import org.slf4j.Logger;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 /**
@@ -33,50 +38,53 @@ public class Try<T>
 	 * @param <T> Type of the return value of the λ-supplier
 	 * @return A new instance of Try that wraps the given λ
 	 */
-	public static <T> Try<T> toExecute(ThrowingSupplier<T> supplier)
+	public static <T> Try<T> getting(ThrowingSupplier<T> supplier)
 	{
 		return new Try<T>(supplier);
 	}
 
-	/**
-	 * Executes the λ wrapped by the {@link Try<T>}
-	 * @return The result of the λ when no exceptions were thrown
-	 * @throws RuntimeException that wraps a checked exception thrown by λ
-	 */
-	public T orRethrowAsRuntime() throws RuntimeException
+	// TODO: improve to not have a return value, for the sake for sane auto-completion
+	public static Try doing(ThrowingAction action)
+	{
+		ThrowingSupplier<Void> wrappedAction = () ->
+		{
+			action.execute();
+			return null;
+		};
+
+		return new Try<Void>(wrappedAction);
+	}
+
+	public T or(Function<Exception, T> handler)
 	{
 		try
 		{
-			return code.execute();
+			return this.code.execute();
 		}
 		catch (Exception ex)
 		{
-			throw new RuntimeException(ex);
+			return handler.apply(ex);
 		}
 	}
 
-	public T orIgnoreExceptionAndReturnDefault(T defaultValue)
+	public <TException extends RuntimeException> T or(ThrowingConsumer<Exception, TException> rethrower) throws TException
 	{
 		try
 		{
-			return code.execute();
+			return this.code.execute();
 		}
 		catch (Exception ex)
 		{
-			return defaultValue;
+			// This should throw a TException
+			rethrower.consume(ex);
+
+			// should not hit
+			throw new RuntimeException(rethrower.toString() + " did not throw an exception, throwing this exception instead");
 		}
 	}
 
-	public T orLogExceptionAndReturnDefault(T defaultValue)
+	public T or(Supplier<T> valueSupplier)
 	{
-		try
-		{
-			return code.execute();
-		}
-		catch (Exception ex)
-		{
-			logger.warn("λ threw a checked exception, returning the defaultValue and logging the exception.", ex);
-			return defaultValue;
-		}
+		return this.or((Exception ex) -> valueSupplier.get());
 	}
 }

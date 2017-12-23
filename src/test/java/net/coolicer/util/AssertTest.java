@@ -1,5 +1,6 @@
 package net.coolicer.util;
 
+import net.coolicer.assertion.Assert;
 import org.junit.Test;
 
 public class AssertTest
