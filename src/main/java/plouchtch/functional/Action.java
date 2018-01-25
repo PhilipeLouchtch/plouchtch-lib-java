@@ -1,4 +1,4 @@
-package net.coolicer.functional;
+package plouchtch.functional;
 
 @FunctionalInterface
 public interface Action

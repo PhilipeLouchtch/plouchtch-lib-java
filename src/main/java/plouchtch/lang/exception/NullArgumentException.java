@@ -1,4 +1,4 @@
-package net.coolicer.lang.exception;
+package plouchtch.lang.exception;
 
 /**
  * Indicates the passing of a null-value argument to a method that disallows null parameters.

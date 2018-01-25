@@ -1,6 +1,6 @@
-package net.coolicer.functional.actions;
+package plouchtch.functional.actions;
 
-import net.coolicer.functional.ThrowingConsumer;
+import plouchtch.functional.ThrowingConsumer;
 
 public class Rethrow
 {

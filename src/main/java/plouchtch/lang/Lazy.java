@@ -1,6 +1,6 @@
-package net.coolicer.lang;
+package plouchtch.lang;
 
-import net.coolicer.lang.exception.NullArgumentException;
+import plouchtch.lang.exception.NullArgumentException;
 
 import java.util.function.Supplier;
 

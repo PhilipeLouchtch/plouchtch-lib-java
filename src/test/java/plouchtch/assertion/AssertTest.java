@@ -1,6 +1,6 @@
-package net.coolicer.util;
+package plouchtch.assertion;
 
-import net.coolicer.assertion.Assert;
+import plouchtch.assertion.Assert;
 import org.junit.Test;
 
 public class AssertTest

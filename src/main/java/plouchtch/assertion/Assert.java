@@ -1,4 +1,4 @@
-package net.coolicer.assertion;
+package plouchtch.assertion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Supplier;

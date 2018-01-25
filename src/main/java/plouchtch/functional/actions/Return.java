@@ -1,4 +1,4 @@
-package net.coolicer.functional.actions;
+package plouchtch.functional.actions;
 
 import org.slf4j.Logger;
 

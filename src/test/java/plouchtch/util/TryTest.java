@@ -1,7 +1,8 @@
-package net.coolicer.util;
+package plouchtch.util;
 
-import net.coolicer.functional.actions.Rethrow;
-import net.coolicer.functional.actions.Return;
+import plouchtch.functional.actions.Rethrow;
+import plouchtch.functional.actions.Return;
+import plouchtch.util.Try;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

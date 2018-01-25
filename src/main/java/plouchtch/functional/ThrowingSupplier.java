@@ -1,4 +1,4 @@
-package net.coolicer.functional;
+package plouchtch.functional;
 
 /**
  * This is basically a {@link java.util.function.Supplier} that has a checked Exception in its signature.

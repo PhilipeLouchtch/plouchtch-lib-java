@@ -1,8 +1,8 @@
-package net.coolicer.util;
+package plouchtch.util;
 
-import net.coolicer.functional.ThrowingAction;
-import net.coolicer.functional.ThrowingConsumer;
-import net.coolicer.functional.ThrowingSupplier;
+import plouchtch.functional.ThrowingAction;
+import plouchtch.functional.ThrowingConsumer;
+import plouchtch.functional.ThrowingSupplier;
 import org.slf4j.Logger;
 
 import java.util.function.Function;
