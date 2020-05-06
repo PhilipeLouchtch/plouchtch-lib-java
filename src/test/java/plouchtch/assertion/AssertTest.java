@@ -1,6 +1,5 @@
 package plouchtch.assertion;
 
-import plouchtch.assertion.Assert;
 import org.junit.Test;
 
 public class AssertTest
@@ -50,6 +49,34 @@ public class AssertTest
 		catch (RuntimeException ex)
 		{
 			org.junit.Assert.assertSame(runtimeException, ex);
+			throw ex;
+		}
+	}
+
+	@Test
+	public void givenValidCondition_whenOrThrowMessage_shouldDoNothing()
+	{
+		try
+		{
+			Assert.that(true).orThrowMessage(":(");
+		}
+		catch (Exception ex)
+		{
+			org.junit.Assert.fail("Assert.that(...).orThrowMessage(...) is now fake news - fix it");
+		}
+	}
+
+	@Test(expected = AssertionError.class)
+	public void givenFalseCondition_whenOrThrowMessage_shouldThrowAssertErrorWithMessage()
+	{
+		RuntimeException runtimeException = new RuntimeException();
+		try
+		{
+			Assert.that(false).orThrowMessage(":)");
+		}
+		catch (AssertionError ex)
+		{
+			org.junit.Assert.assertSame(":)", ex.getMessage());
 			throw ex;
 		}
 	}

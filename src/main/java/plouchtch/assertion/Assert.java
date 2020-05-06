@@ -43,8 +43,17 @@ public class Assert
 		}
 	}
 
+	public void orThrowMessage(String message)
+	{
+		if (assertFailed)
+		{
+			throw new AssertionError(message);
+		}
+	}
+
 	/**
-	 * <b>Terminal operation of the Assert.</b><br /><br />
+	 * <b>Terminal operation of the Assert.</b>
+	 * <br /><br />
 	 * Will throw the Exception of the type, with the argument provided if the assertion condition does not hold.<br/><br/>
 	 * WARNING: This method is must be used with great care as any issues with the exception class will bubble up as a runtime exception!
 	 * Furthermore, the return type of supplier is included in the throws signature of this method so that it is possible to throw checked exception during the
