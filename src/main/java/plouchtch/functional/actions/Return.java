@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class Return<T>
+public class Return
 {
 	private static Logger logger = org.slf4j.LoggerFactory.getLogger(Return.class);
 
@@ -14,7 +14,7 @@ public class Return<T>
 		return () -> value;
 	}
 
-	public static <TException extends Exception, T> Function<TException, T> defaultValueAndLogException(T value)
+	public static <TException extends Throwable, T> Function<TException, T> defaultValueAndLogException(T value)
 	{
 		return (TException ex) ->
 		{

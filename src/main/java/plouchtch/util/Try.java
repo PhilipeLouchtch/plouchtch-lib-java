@@ -1,7 +1,7 @@
 package plouchtch.util;
 
 import plouchtch.functional.ThrowingAction;
-import plouchtch.functional.ThrowingConsumer;
+import plouchtch.functional.ThrowablesRethrower;
 import plouchtch.functional.ThrowingSupplier;
 import org.slf4j.Logger;
 
@@ -67,7 +67,7 @@ public class Try<T>
 		}
 	}
 
-	public <TException extends RuntimeException> T or(ThrowingConsumer<Exception, TException> rethrower) throws TException
+	public <TException extends RuntimeException> T or(ThrowablesRethrower<Exception, TException> rethrower) throws TException
 	{
 		try
 		{
