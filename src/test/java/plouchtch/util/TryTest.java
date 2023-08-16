@@ -2,19 +2,19 @@ package plouchtch.util;
 
 import plouchtch.functional.actions.Rethrow;
 import plouchtch.functional.actions.Return;
-import plouchtch.util.Try;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class TryTest
 {
@@ -24,7 +24,7 @@ public class TryTest
 	@Before
 	public void setUp() throws Exception
 	{
-		MockitoAnnotations.initMocks(this);
+		openMocks(this);
 
 		/* Inject the logger */
 		Field loggerField = Return.class.getDeclaredField("logger");
@@ -51,7 +51,7 @@ public class TryTest
 		String s = Try.getting(() -> expected).or(Return.defaultValue("wasn't me"));
 
 		Assert.assertEquals(expected, s);
-		Mockito.verifyNoMoreInteractions(mockedLoggerInReturn);
+		verifyNoMoreInteractions(mockedLoggerInReturn);
 	}
 
 	@Test
@@ -59,10 +59,10 @@ public class TryTest
 	{
 		final String expected = "This is fine";
 
-		String s = Try.getting(() -> expected).or(Return.defaultValueAndLogException("wasn't me"));
+		String s = Try.getting(() -> expected).or(Return.defaultAndLog("wasn't me"));
 
 		Assert.assertEquals(expected, s);
-		Mockito.verifyNoMoreInteractions(mockedLoggerInReturn);
+		verifyNoMoreInteractions(mockedLoggerInReturn);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class TryTest
 		String s = Try.getting(() -> { if (true) { throw theException; } else return "Not me";}).or(Return.defaultValue(defaultValue));
 
 		assertEquals(defaultValue, s);
-		Mockito.verifyNoMoreInteractions(mockedLoggerInReturn);
+		verifyNoMoreInteractions(mockedLoggerInReturn);
 	}
 
 	@Test
@@ -99,10 +99,16 @@ public class TryTest
 		final Exception theException = new Exception("Expect me");
 		String defaultValue = "default";
 
-		String s = Try.getting(() -> { if (true) { throw theException; } else return "Not me";}).or(Return.defaultValueAndLogException(defaultValue));
+		String s = Try.getting(() -> {
+			if (true)
+				throw theException;
+			else
+				return "Not me";
+		}).or(Return.defaultAndLog(defaultValue));
 
 		assertEquals(defaultValue, s);
-		Mockito.verify(mockedLoggerInReturn, Mockito.only()).warn(Matchers.anyString(), Matchers.anyString(), Matchers.anyString(), Matchers.anyString(), Matchers.any(StackTraceElement[].class));
+		verify(mockedLoggerInReturn).warn(anyString(), anyString(), anyString(),  eq(theException.getCause()), any(StackTraceElement[].class));
+		verifyNoMoreInteractions(mockedLoggerInReturn);
 	}
 
 	@Test

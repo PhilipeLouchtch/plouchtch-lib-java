@@ -14,11 +14,17 @@ public class Return
 		return () -> value;
 	}
 
-	public static <TException extends Throwable, T> Function<TException, T> defaultValueAndLogException(T value)
+	public static <TException extends Throwable, T> Function<TException, T> defaultAndLog(T value)
 	{
 		return (TException ex) ->
 		{
-			logger.warn("Exception ({}) occurred, returning default value. Msg: '{}', Cause: '{}'.\n Here's the stacktrace: {}\n", ex.toString(), ex.getMessage(), ex.getCause(), ex.getStackTrace());
+			logger.warn(
+					"Exception ({}) occurred, returning default value. Msg: '{}', Cause: '{}'.\n Here's the stacktrace: {}\n",
+					ex.toString(),
+					ex.getMessage(),
+					ex.getCause(),
+					ex.getStackTrace()
+			);
 
 			return value;
 		};
