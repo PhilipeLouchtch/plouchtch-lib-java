@@ -47,7 +47,7 @@ public class Assert
 	{
 		if (assertFailed)
 		{
-			throw new AssertionError(message);
+			throw new AssertionException(message);
 		}
 	}
 
